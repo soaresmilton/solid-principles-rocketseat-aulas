@@ -35,6 +35,56 @@ Os princípios SOLID são um conjunto de cinco diretrizes para o design de softw
 2. **Open/Closed Principle (OCP) - Princípio Aberto/Fechado**  
    As entidades de software (classes, módulos, funções, etc.) devem estar abertas para extensão, mas fechadas para modificação. Isso significa que você deve ser capaz de adicionar novas funcionalidades sem alterar o código existente.
 
+   ```python
+        from typing import Any
+        from abc import ABC, abstractmethod
+        # Exemplo ruim
+        class Company:
+          def do_work(self, worker: int) -> None:
+            if worker == 1:
+              print("Programmer creating code")
+            elif worker == 2:
+              print("Seller selling the product")
+            elif worker == 3:
+              print("Human Resources hiring new devs")
+            else:
+              print("Error, no Worker!")
+
+
+        # Aplicando conceitos OCP:
+        class Worker(ABC):
+          @abstractmethod
+          def make(self):
+            pass
+
+        class Programmer(Worker):
+          def make(self):
+            print("Programmer creating code")
+
+        class Seller(Worker):
+          def make(self):
+            print("Seller selling the product")
+
+        class HumanResources(Worker):
+          def make(self):
+            print("Human Resources hiring new devs")
+
+
+        class CompanyMelhorada:
+          def do_work(self, worker: Any) -> None:
+            worker.make()
+
+
+        programmer = Programmer()
+        seller = Seller()
+        hr = HumanResources()
+        company = CompanyMelhorada()
+        company.do_work(worker=programmer)
+        company.do_work(worker=seller)
+        company.do_work(worker=hr)
+
+   ```
+
 3. **Liskov Substitution Principle (LSP) - Princípio da Substituição de Liskov**  
    Objetos de uma classe derivada devem poder substituir objetos da classe base sem alterar o comportamento esperado do programa. Isso garante que as subclasses  sejam substituíveis pelas suas superclasses.  
 
