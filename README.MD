@@ -7,7 +7,7 @@ Os princípios SOLID são um conjunto de cinco diretrizes para o design de softw
 
    ```python
       # Exemplo da aula:
-      
+
       class Process:
         def handle(self, username: str, password: str) -> None:
           if self.__verify_input_data(username, password):
@@ -43,3 +43,8 @@ Os princípios SOLID são um conjunto de cinco diretrizes para o design de softw
 
 5. **Dependency Inversion Principle (DIP) - Princípio da Inversão de Dependência**  
    Módulos de alto nível não devem depender de módulos de baixo nível; ambos devem depender de abstrações. Além disso, abstrações não devem depender de detalhes; detalhes devem depender de abstrações. Isso ajuda a reduzir o acoplamento entre os componentes do sistema.
+
+
+---
+
+![Imagem retirada do blog Byte Byte Go - https://blog.bytebytego.com/p/ep175-what-is-the-solid-principle](image.png)
