@@ -198,6 +198,45 @@ Os princípios SOLID são um conjunto de cinco diretrizes para o design de softw
 5. **Dependency Inversion Principle (DIP) - Princípio da Inversão de Dependência**  
    Módulos de alto nível não devem depender de módulos de baixo nível; ambos devem depender de abstrações. Além disso, abstrações não devem depender de detalhes; detalhes devem depender de abstrações. Isso ajuda a reduzir o acoplamento entre os componentes do sistema.
 
+  ```python
+        # Exemplo ruim
+        class MySQLDatabase:
+          def connect(self) -> None:
+            print("Connecting to MySQL Database")
+
+        class UserRepository:
+          def __init__(self) -> None:
+            self.database = MySQLDatabase()
+
+          def get_user(self, user_id: int) -> None:
+            self.database.connect()
+            print(f"Getting user {user_id}")
+
+        # Aplicando conceitos DIP:
+        from abc import ABC, abstractmethod
+
+        class Database(ABC):
+          @abstractmethod
+          def connect(self) -> None:
+            pass
+
+        class MySQLDatabase(Database):
+          def connect(self) -> None:
+            print("Connecting to MySQL Database")
+
+        class UserRepository:
+          def __init__(self, database: Database) -> None:
+            self.database = database
+
+          def get_user(self, user_id: int) -> None:
+            self.database.connect()
+            print(f"Getting user {user_id}")
+
+        mysql_db = MySQLDatabase()
+        user_repo = UserRepository(mysql_db)
+        user_repo.get_user(1)
+   ```
+
 
 ---
 
