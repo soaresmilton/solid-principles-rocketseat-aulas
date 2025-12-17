@@ -146,6 +146,55 @@ Os princípios SOLID são um conjunto de cinco diretrizes para o design de softw
 4. **Interface Segregation Principle (ISP) - Princípio da Segregação de Interfaces**  
    Muitas interfaces específicas são melhores do que uma interface única e geral. Isso significa que os clientes não devem ser forçados a depender de interfaces que não utilizam.
 
+   ```python
+        # Exemplo ruim
+        class Worker:
+          def work(self) -> None:
+            pass
+
+          def eat(self) -> None:
+            pass
+
+        class HumanWorker(Worker):
+          def work(self) -> None:
+            print("Working")
+
+          def eat(self) -> None:
+            print("Eating")
+
+        class RobotWorker(Worker):
+          def work(self) -> None:
+            print("Working")
+
+          def eat(self) -> None:
+            raise Exception("Robots don't eat")
+
+        # Aplicando conceitos ISP:
+        from abc import ABC, abstractmethod
+
+        class Workable(ABC):
+          @abstractmethod
+          def work(self) -> None:
+            pass
+
+        class Eatable(ABC):
+          @abstractmethod
+          def eat(self) -> None:
+            pass
+
+        class HumanWorker(Workable, Eatable):
+          def work(self) -> None:
+            print("Working")
+
+          def eat(self) -> None:
+            print("Eating")
+
+        class RobotWorker(Workable):
+          def work(self) -> None:
+            print("Working")
+    
+    ```
+
 5. **Dependency Inversion Principle (DIP) - Princípio da Inversão de Dependência**  
    Módulos de alto nível não devem depender de módulos de baixo nível; ambos devem depender de abstrações. Além disso, abstrações não devem depender de detalhes; detalhes devem depender de abstrações. Isso ajuda a reduzir o acoplamento entre os componentes do sistema.
 
