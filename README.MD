@@ -86,7 +86,62 @@ Os princípios SOLID são um conjunto de cinco diretrizes para o design de softw
    ```
 
 3. **Liskov Substitution Principle (LSP) - Princípio da Substituição de Liskov**  
-   Objetos de uma classe derivada devem poder substituir objetos da classe base sem alterar o comportamento esperado do programa. Isso garante que as subclasses  sejam substituíveis pelas suas superclasses.  
+   Objetos de uma classe derivada devem poder substituir objetos da classe base sem alterar o comportamento esperado do programa. Isso garante que as subclasses sejam substituíveis pelas suas superclasses.  
+
+    ```python
+        # Exemplo ruim
+        class Bird:
+          def fly(self) -> None:
+            print("Flying")
+
+        class Sparrow(Bird):
+          pass
+
+        class Ostrich(Bird):
+          def fly(self) -> None:
+            raise Exception("Ostriches can't fly")
+
+        def make_bird_fly(bird: Bird) -> None:
+          bird.fly()
+
+        sparrow = Sparrow()
+        ostrich = Ostrich()
+
+        make_bird_fly(sparrow)  # Funciona bem
+        make_bird_fly(ostrich)  # Levanta uma exceção
+
+        # Aplicando conceitos LSP:
+        from abc import ABC, abstractmethod
+
+        class Bird(ABC):
+          @abstractmethod
+          def move(self) -> None:
+            pass
+
+        class FlyingBird(Bird):
+          def move(self) -> None:
+            print("Flying")
+
+        class NonFlyingBird(Bird):
+          def move(self) -> None:
+            print("Walking")
+
+        class Sparrow(FlyingBird):
+          pass
+
+        class Ostrich(NonFlyingBird):
+          pass
+
+        def make_bird_move(bird: Bird) -> None:
+          bird.move()
+
+        sparrow = Sparrow()
+        ostrich = Ostrich()
+
+        make_bird_move(sparrow)  # Funciona bem
+        make_bird_move(ostrich)  # Funciona bem
+    
+    ```
 
 4. **Interface Segregation Principle (ISP) - Princípio da Segregação de Interfaces**  
    Muitas interfaces específicas são melhores do que uma interface única e geral. Isso significa que os clientes não devem ser forçados a depender de interfaces que não utilizam.
