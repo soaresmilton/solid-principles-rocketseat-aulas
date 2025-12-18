@@ -42,7 +42,15 @@ class ExameFezes(Exam):
   def exam_name(self):
       return "Exame de Fezes"
 
-class Approver:
+
+class ExamApprovalHandler(ABC):
+    @abstractmethod
+    def verify_exam(self, exam: Exam) -> bool: pass
+
+    @abstractmethod
+    def approve_exam(self, exams: List[Exam]) -> None: pass
+
+class Approver(ExamApprovalHandler):
     def verify_exam(self, exam: Exam) -> bool:
         exam.exam_verification()
         return True
